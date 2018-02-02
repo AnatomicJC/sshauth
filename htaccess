@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "plouf"
+AuthUserFile /etc/apache2/htpasswd
+Require valid-user
