@@ -1,0 +1,42 @@
+version: '3.3'
+
+services:
+  mysql:
+    image: mariadb:10
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+      MYSQL_DATABASE: ssh_management
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - ./ssh_management.sql.gz:/docker-entrypoint-initdb.d/ssh_management.sql.gz
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    links:
+      - mysql:db
+    environment:
+      PMA_ABSOLUTE_URI: http://localhost:8080/pma/
+      PMA_HOST: db
+  php:
+    #image: php:7-fpm-alpine
+    image: phpjc
+    volumes:
+      - ./index.php:/usr/share/nginx/html/index.php
+    links:
+      - mysql:db
+    environment:
+      MYSQL_HOST: db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: ssh_management
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - ./index.php:/usr/share/nginx/html/index.php
+      - ./etc/nginx/nginx.conf:/etc/nginx/nginx.conf
+    links:
+      - php:php
+      - phpmyadmin:phpmyadmin
+    ports:
+      - 8080:80

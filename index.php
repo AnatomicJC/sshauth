@@ -2,7 +2,11 @@
 $server_user = $_POST['user'];
 $server_hostname = $_POST['hostname'];
 
-$mysqli = new mysqli("localhost", "user", "password", "ssh_management");
+$mysqli = new mysqli(
+  $_ENV['MYSQL_HOST'],
+  $_ENV['MYSQL_USER'],
+  $_ENV['MYSQL_PASSWORD'],
+  $_ENV['MYSQL_DATABASE']);
 
 $query = "-- Search per server
 SELECT public_key FROM ssh_keys
