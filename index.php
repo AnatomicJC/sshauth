@@ -16,7 +16,7 @@ AND link_servers.server_hostname = '${server_hostname}'
 AND (
   (CURDATE() BETWEEN link_servers.valid_from AND link_servers.valid_until)
   OR
-  (link_servers.valid_until = '0000-00-00 00:00:00' AND link_servers.valid_from = '0000-00-00 00:00:00')
+  (link_servers.valid_until IS NULL AND link_servers.valid_from IS NULL)
 )
 
 UNION
@@ -30,7 +30,7 @@ AND servers_groups_link.server_hostname = '${server_hostname}'
 AND (
   (CURDATE() BETWEEN link_server_groups.valid_from AND link_server_groups.valid_until)
   OR
-  (link_server_groups.valid_until = '0000-00-00 00:00:00' AND link_server_groups.valid_from = '0000-00-00 00:00:00')
+  (link_server_groups.valid_until IS NULL AND link_server_groups.valid_from IS NULL)
 )
 
 UNION
@@ -42,7 +42,7 @@ WHERE link_server_groups.groupname = 'Masters'
 AND (
   (CURDATE() BETWEEN link_server_groups.valid_from AND link_server_groups.valid_until)
   OR
-  (link_server_groups.valid_until = '0000-00-00 00:00:00' AND link_server_groups.valid_from = '0000-00-00 00:00:00')
+  (link_server_groups.valid_until IS NULL AND link_server_groups.valid_from IS NULL)
 )";
 
 $result = $mysqli->query($query);
