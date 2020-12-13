@@ -20,7 +20,7 @@ services:
       PMA_HOST: db
   php:
     #image: php:7-fpm-alpine
-    image: phpjc
+    image: anatomicjc/sshauth
     volumes:
       - ./index.php:/usr/share/nginx/html/index.php
     links:
