@@ -7,5 +7,5 @@ helm repo update
 ## MariaDB setup
 
 ```
-helm install sshauth-mariadb bitnami/mariadb-galera -f sshauth-production.yaml -n sshauth-mariadb
+helm install sshauth-mariadb bitnami/mariadb-galera -f values-production.yaml
 ```

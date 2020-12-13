@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: sshauth-ingress
+  namespace: default
+spec:
+  rules:
+  - host: sshauth.open-web.fr
+    http:
+      paths:
+      - backend:
+          serviceName: sshauth
+          servicePort: 8080

@@ -2,9 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: sshauth
-  namespace: applications
+  namespace: default
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: sshauth
@@ -20,14 +20,14 @@ spec:
         image: phpmyadmin/phpmyadmin:4.9
         env:
         - name: PMA_ABSOLUTE_URI
-          value: https://sshauth.example.com/pma/
+          value: https://sshauth.open-web.fr/pma/
         - name: PMA_HOST
-          value: sshauth-mariadb-mariadb-galera.sshauth-mariadb
+          value: sshauth-mariadb-mariadb-galera.default
       - name: sshauth
-        image: docker-registry.example.com/sshauth
+        image: docker.io/anatomicjc/sshauth
         env:
         - name: MYSQL_HOST
-          value: sshauth-mariadb-mariadb-galera.sshauth-mariadb
+          value: sshauth-mariadb-mariadb-galera.default
         - name: MYSQL_USER
           value: sshauth
         - name: MYSQL_DATABASE
